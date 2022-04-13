@@ -6,24 +6,25 @@ var socketIO = require('socket.io');
 var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
+const PORT = process.env.PORT ?? 3000
 
-app.set('port', 5000);
+app.set('port', PORT);
 app.use('/static', express.static(__dirname + '/static'));
 
 // Маршруты
-app.get('/', function(request, response) {
-    response.sendFile(path.join(__dirname, 'index.html'));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Запуск сервера
-server.listen(5000, function() {
-    console.log('Запускаю сервер на порте 5000');
+server.listen(PORT, () => {
+    console.log(`Запускаю сервер на порте ${PORT}...`);
 });
 
 // Обработчик веб-сокетов
-io.on('connection', function(socket) {
+io.on('connection', (socket) => {
 });
 
-setInterval(function() {
+setInterval(() => {
     io.sockets.emit('message', 'hi!');
 }, 1000);

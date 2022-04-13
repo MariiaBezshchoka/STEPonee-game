@@ -1,4 +1,5 @@
 "use strict";
+//import pjs from pointjs_0
 
 var pjs = new PointJS(1920, 1080, {
   Background: '#fff'
@@ -15,10 +16,10 @@ key.initControl();
 var width = WH.w;
 var height = WH.h;
 
-var socket = io();
-socket.on('message', function(data) {
-    console.log(data);
-});
+// var socket = io();
+// socket.on('message', function(data) {
+//     console.log(data);
+// });
 var WH_x_1090 = WH.h - 1020;
 var WH_y_1910 = WH.w - 1910;
 mouse.initControl();
@@ -31,7 +32,7 @@ var nz = 5;
 var link = ["0","1","2","3","4","https://youtu.be/kxyOvTpe_gI","https://youtu.be/jD-hLQGdfcY","https://youtu.be/EcIVfes5CkM","https://youtu.be/n8SlTKaAmYo","https://youtu.be/z2KMxSb4GIo","https://youtu.be/qomCKkKcwn4","https://youtu.be/hzzbFTzVSbA","https://youtu.be/X7d6Dt17yHk","https://youtu.be/LlQEKB2H7z4","https://youtu.be/GHJyfokY5Dw","https://youtu.be/wTowEKjDGkU","https://youtu.be/H8kqPkEXP_E","https://youtu.be/kYt8gxlthWs","https://youtu.be/0NihLoLlUaE","https://youtu.be/DZEOt4pQXXk","https://youtu.be/zLrWIgkvoB0","https://youtu.be/rZAkkGtntbQ","https://youtu.be/-2X-pL06628","https://youtu.be/AQt4K08L_m8","https://youtu.be/FQRnJvbLTAo","https://youtu.be/WvBB06_QGqg","https://youtu.be/hKN3Mt0-hjk","https://youtu.be/2WLtAOR5vlE","https://youtu.be/2EjxIQXBhlc","https://youtu.be/2EZPimjM9Q8","https://youtu.be/cUAsTQUU3xk","https://youtu.be/WzcjCrmKBqg","https://youtu.be/PSYRbJjIT6U","https://youtu.be/XRq7bl8auzc","https://youtu.be/qdOZZspN7dw","https://youtu.be/_AkDWAIkeSQ","https://youtu.be/57n4dZAPxNY","https://youtu.be/7uxu4Z2HAnA","https://youtu.be/ZEuuKdy-YdQ","https://youtu.be/jeI992mvlEY","https://youtu.be/zRI-1QVfhGo","https://youtu.be/4GaVYO2x2Us","https://youtu.be/t6Bi_0q_17Y","https://youtu.be/oFnpToshtp8","https://youtu.be/_Gb94N1GWA8","https://youtu.be/RGnLdUJbYmQ","https://youtu.be/6nBMo5LJ888","https://youtu.be/7D2v0x8YPJk","https://youtu.be/zFf5__U0uZg","https://youtu.be/EhrFmgeqo6k","https://youtu.be/jjCBYlzwaY8","https://youtu.be/sz2Dmo1_BjM","https://youtu.be/DOBjwlfIZdE","https://youtu.be/dYQr7NfefkA","https://youtu.be/yY13X0BKaUw","https://youtu.be/PjRRR94WbOE","https://youtu.be/MvqB6JsRbsc","https://youtu.be/D_6QmL6rExk","https://youtu.be/M9pADzWga1c","https://youtu.be/2cTZTqBU1Rc","https://youtu.be/ZuQCFhGtNY4","https://youtu.be/YqAP4M_5XCs","https://youtu.be/B-izrXbgfCI","https://youtu.be/MZ4JGye4dQU","https://youtu.be/2OjCMR8DGLg","https://youtu.be/h41Rrk_6rzs","https://youtu.be/yGO84ZoYXts"];
 
 
-var txt = ["image/01.png", "image/02.png", "image/03.png", "image/04.png", "image/05.png", "image/06.png", "image/07.png", "image/08.png", "image/09.png", "image/10.png", "image/11.png", "image/12.png", "image/13.png", "image/14.png", "image/15.png", "image/16.png", "image/17.png", "image/18.png", "image/19.png", "image/20.png", "image/21.png", "image/22.png", "image/23.png", "image/24.png", "image/25.png", "image/26.png", "image/27.png", "image/28.png", "image/29.png", "image/30.png", "image/31.png", "image/32.png", "image/33.png", "image/34.png", "image/35.png", "image/36.png", "image/37.png", "image/38.png", "image/39.png", "image/40.png", "image/41.png", "image/42.png", "image/43.png", "image/44.png", "image/45.png", "image/46.png", "image/47.png", "image/48.png", "image/49.png", "image/50.png", "image/51.png", "image/52.png", "image/53.png", "image/54.png", "image/55.png", "image/56.png", "image/57.png", "image/58.png", "image/59.png", "image/60.png", "image/61.png", "image/62.png" ];
+var txt = ["static/image/01.png", "static/image/02.png", "static/image/03.png", "static/image/04.png", "static/image/05.png", "static/image/06.png", "static/image/07.png", "static/image/08.png", "static/image/09.png", "static/image/10.png", "static/image/11.png", "static/image/12.png", "static/image/13.png", "static/image/14.png", "static/image/15.png", "static/image/16.png", "static/image/17.png", "static/image/18.png", "static/image/19.png", "static/image/20.png", "static/image/21.png", "static/image/22.png", "static/image/23.png", "static/image/24.png", "static/image/25.png", "static/image/26.png", "static/image/27.png", "static/image/28.png", "static/image/29.png", "static/image/30.png", "static/image/31.png", "static/image/32.png", "static/image/33.png", "static/image/34.png", "static/image/35.png", "static/image/36.png", "static/image/37.png", "static/image/38.png", "static/image/39.png", "static/image/40.png", "static/image/41.png", "static/image/42.png", "static/image/43.png", "static/image/44.png", "static/image/45.png", "static/image/46.png", "static/image/47.png", "static/image/48.png", "static/image/49.png", "static/image/50.png", "static/image/51.png", "static/image/52.png", "static/image/53.png", "static/image/54.png", "static/image/55.png", "static/image/56.png", "static/image/57.png", "static/image/58.png", "static/image/59.png", "static/image/60.png", "static/image/61.png", "static/image/62.png" ];
 var numb_1_35 = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35'];
 
 var cI = '#A0FF84'; // рубашка Маша 68d101
@@ -63,7 +64,7 @@ var back = game.newBackgroundObject({
   h: 1080,
   countX: 1,
   countY: 1,
-  file: "image/fon.png"
+  file: "static/image/fon.png"
 });
 
 var back1 = game.newBackgroundObject({
@@ -73,10 +74,10 @@ var back1 = game.newBackgroundObject({
   h: 1080,
   countX: 1,
   countY: 1,
-  file: "image/fon1.png"
+  file: "static/image/fon1.png"
 });
 var button = game.newImageObject({
-  file: "image/button.png",
+  file: "static/image/button.png",
   x: psC.x + 200, //width - WH.h / 2 + 200,
   y: psC.y - 50,//height - WH.w / 2 - 50,
   w: 200,
@@ -88,12 +89,12 @@ var button1 = game.newImageObject({
   y: height - WH.w / 2 - 50,
   w: 200,
   h: 200,
-  file: "image/button1.png",
+  file: "static/image/button1.png",
   alpha: 0 //scale : 0.5, // уменьшить картинку в 2 раза, если не заданы ширина и высота
 
 });
 var field = game.newImageObject({
-  file: "image/field.png",
+  file: "static/image/field.png",
   x: psC.x - 695, 
   y: psC.y - 372,
   // w : 200, 
@@ -106,7 +107,7 @@ var field = game.newImageObject({
 }); //цвет канта e7fbff
 
 var field_smoke = game.newImageObject({
-  file: "image/field_smoke.png",
+  file: "static/image/field_smoke.png",
   x: psC.x - 695,// для меня 671,
   y: psC.y -  372,// для меня 398.5,
   // w : 200, 
@@ -125,7 +126,7 @@ var field_smoke_back = game.newBackgroundObject({
   h: 1080,
   countX: 1,
   countY: 1,
-  file: "image/field_smoke_back.png"
+  file: "static/image/field_smoke_back.png"
 });
 
 var s = 180,s2 = 180,card = [];
@@ -159,7 +160,7 @@ for (var x = 0; x < 10; x++) {
   for (var y = 0; y < 6; y++) {
     
     logo.push(game.newImageObject({
-      file: "image/LOGO.png",
+      file: "static/image/LOGO.png",
       x: WH_x_1090 + s * x, // 60 + s * x
       y: WH_y_1910 + s2 * y,
       w: s - 15,
