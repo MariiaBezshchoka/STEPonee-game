@@ -1,5 +1,4 @@
 "use strict";
-//import pjs from pointjs_0
 
 var pjs = new PointJS(1920, 1080, {
   Background: '#fff'
@@ -16,16 +15,15 @@ key.initControl();
 var width = WH.w;
 var height = WH.h;
 
-// var socket = io();
-// socket.on('message', function(data) {
-//     console.log(data);
-// });
-var WH_x_1090 = WH.h - 1020;
-var WH_y_1910 = WH.w - 1910;
+pjs.system.setSmoothing(true); 
 mouse.initControl();
 ss.initFullScreen();
 if (mouse.isPress('RIGHT') && ss.initFullScreen() == true) ss.exitFullScreen();
-var psC = pjs.camera.getPositionC(); //var point = obj.getPositionC();
+var Cam = pjs.camera;
+var psC = {
+ x: (ss.isFullScreen() == true) ? Cam.getPositionC() : window.screen.width/2, //var point = obj.getPositionC(); 
+ y: (ss.isFullScreen() == true) ? Cam.getPositionC() : window.screen.height/2,
+};
 var timer =0;
 var nn = 0;
 var nz = 5;
@@ -33,29 +31,7 @@ var link = ["0","1","2","3","4","https://youtu.be/kxyOvTpe_gI","https://youtu.be
 
 
 var txt = ["static/image/01.png", "static/image/02.png", "static/image/03.png", "static/image/04.png", "static/image/05.png", "static/image/06.png", "static/image/07.png", "static/image/08.png", "static/image/09.png", "static/image/10.png", "static/image/11.png", "static/image/12.png", "static/image/13.png", "static/image/14.png", "static/image/15.png", "static/image/16.png", "static/image/17.png", "static/image/18.png", "static/image/19.png", "static/image/20.png", "static/image/21.png", "static/image/22.png", "static/image/23.png", "static/image/24.png", "static/image/25.png", "static/image/26.png", "static/image/27.png", "static/image/28.png", "static/image/29.png", "static/image/30.png", "static/image/31.png", "static/image/32.png", "static/image/33.png", "static/image/34.png", "static/image/35.png", "static/image/36.png", "static/image/37.png", "static/image/38.png", "static/image/39.png", "static/image/40.png", "static/image/41.png", "static/image/42.png", "static/image/43.png", "static/image/44.png", "static/image/45.png", "static/image/46.png", "static/image/47.png", "static/image/48.png", "static/image/49.png", "static/image/50.png", "static/image/51.png", "static/image/52.png", "static/image/53.png", "static/image/54.png", "static/image/55.png", "static/image/56.png", "static/image/57.png", "static/image/58.png", "static/image/59.png", "static/image/60.png", "static/image/61.png", "static/image/62.png" ];
-var numb_1_35 = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35'];
-
-var cI = '#A0FF84'; // рубашка Маша 68d101
-
-var cM = '#85A9FF'; // рубашка Макс 004f86
-
-var cN = '#FFC4C4'; // рубашка Нати fc8e8e
-
-var cO = '#FFE951'; // рубашка Общак ffc208
-
-var cH = '#00234f'; // общая рубашка
-
-var cF = '#FDFFDF'; //фон карточки
-
-var cNatalya = '#C48BB5';
-var cAlla = '#90D5D8';
-var cCveta = '#A1FFB4';
-var cDmitr = '#E15478';
-var cEliza = '#A1CDFF';
-var cMaksim = '#DCDCDC';
-var cMixail = '#FFFF75';
-var cLera = '#FFCE8D';
-var cVera = '#E8A6FF';
+var numb_1_35 = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35', '36', '37'];
 
 var back = game.newBackgroundObject({
   x: 0,
@@ -95,21 +71,24 @@ var button1 = game.newImageObject({
 });
 var field = game.newImageObject({
   file: "static/image/field.png",
-  x: psC.x - 695, 
-  y: psC.y - 372,
-  // w : 200, 
-  //h : 200,
+  x: 0,//psC.x, 
+  y: 0,//psC.y,
+  w: 1300, 
+  h: 930,
   shadowColor: "#333333",
   shadowBlur: 5,
   alpha: 0,
-  scale: 1 // уменьшить картинку в 2 раза, если не заданы ширина и высота
+ // scale: 1, // уменьшить картинку в 2 раза, если не заданы ширина и высота
 
 }); //цвет канта e7fbff
 
+field.x = psC.x - field.w/2 - 50;
+field.y = psC.y - field.h/2;
+
 var field_smoke = game.newImageObject({
   file: "static/image/field_smoke.png",
-  x: psC.x - 695,// для меня 671,
-  y: psC.y -  372,// для меня 398.5,
+  x: field.x,// для меня 671,
+  y: field.y,// для меня 398.5,
   // w : 200, 
   //h : 200,
   shadowColor: "#333333",
@@ -135,8 +114,8 @@ for (var file = 0; file < 60; file++) {
     for (var y = 0; y < 6; y++) {
       card.push(game.newImageObject({
         file: txt[file++],
-        x: WH_x_1090 + s * x, // 60 + s * x
-        y: WH_y_1910 + s2 * y,
+        x: back1.x + 50 + s * x, // 60 + s * x
+        y: back1.y + 10 + s2 * y,
         w: s - 15,
         h: s2 - 15,
         alpha: 0,
@@ -161,8 +140,8 @@ for (var x = 0; x < 10; x++) {
     
     logo.push(game.newImageObject({
       file: "static/image/LOGO.png",
-      x: WH_x_1090 + s * x, // 60 + s * x
-      y: WH_y_1910 + s2 * y,
+      x: back1.x + 50 + s * x, // 60 + s * x
+      y: back1.y + 10 + s2 * y,
       w: s - 15,
       h: s2 - 15,
       alpha: 0,
@@ -186,8 +165,8 @@ var s = 180,s2 = 180,fon3 = [];
 for (var x = 0; x < 7; x++) {
   for (var y = 0; y < 5; y++) {
     fon3.push(game.newRectObject({
-      x: (WH.h - 788) + s * x, //292 + s * x
-      y: (WH.w - 1830) + s2 * y,
+      x: (field.x + 25) + s * x, //292 + s * x
+      y: (field.y + 20) + s2 * y,
       w: s - 10,
       h: s2 - 10,
       fillColor: 0,
@@ -212,11 +191,11 @@ for (var x = 0; x < 7; x++) {
 
 var s = 180,s2 = 180,numb = [];
 for (var file = 0; file < 36; file++) {
-  for (var y = 0; y < 5; y++) {
-    for (var x = 0; x < 7; x++) {	
+  for (var x = 0; x < 7; x++) {
+    for (var y = 0; y < 5; y++) {	
     numb.push(game.newTextObject(   { 
-     x: (WH.h - 788) + s * x, //292 + s * x
-     y: (WH.w - 1830) + s2 * y, 
+     x: (field.x + 35) + s * x, //292 + s * x
+     y: (field.y + 30) + s2 * y, 
      text : numb_1_35[file++], 
      size : 90, 
      padding : 15, 
@@ -227,7 +206,7 @@ for (var file = 0; file < 36; file++) {
      strokeWidthText : 1,
    }))}}};
    
-   numb.splice(33,2);
+  // numb.splice(33,2);
 
  //var music = pjs.wAudio.newAudio("audio/Eric_Nam_-_I_Don't_Know_You_Anymore.mp3", 0.5);
 // music.play();
@@ -259,7 +238,7 @@ var koloda = game.newBaseObject(   {
      }
    });
 
-var the_first = function(){
+var the_first = () => {
 
  if (timer>=0 && timer<20 && card[59].alpha<1) {
   timer++;
@@ -295,6 +274,20 @@ var the_first_1 = function(){
   }
 
 }};
+
+var the_first_2 = () => {
+  if (logo[0].isStaticIntersect(fon3[0].getStaticBox()) !== true) {
+  for (var i in card, fon3) {
+    card[i].moveTo(p(fon3[i].x, fon3[i].y), x1, y1); 
+    logo[i].moveTo(p(fon3[i].x, fon3[i].y), x1, y1);
+
+    if (logo[i].isStaticIntersect(fon3[i].getStaticBox()) == true) {
+      card[i].setPosition(p(fon3[i].x, fon3[i].y));
+      logo[i].setPosition(p(fon3[i].x, fon3[i].y))
+    }}
+
+  }
+}
 
 
 
@@ -337,7 +330,10 @@ game.newLoop('start', function () {
 
 game.setLoop('start');
 game.newLoop('myGame', function () {
+
+
   if(ss.isFullScreen()==true){
+    
   
     the_first();
 
@@ -360,8 +356,9 @@ game.newLoop('myGame', function () {
 }); //game.newLoop('myGame', function
 
 game.newLoop('myGame1', function () {
+  
   if (ss.isFullScreen()==true){
-
+    
     the_first_1();
 
     if (key.isPress('SPACE') && card[0].isIntersect(koloda) == true) {
@@ -388,7 +385,9 @@ game.newLoop('myGame1', function () {
 }); //game.newLoop('myGame', function
 
 game.newLoop('myGame2', function () {
-  if(ss.isFullScreen()==true){
+  if(ss.isFullScreen()==true){  
+    
+
 
   if (field.alpha < 1) {
     field.alpha += 0.05;
@@ -435,249 +434,17 @@ game.newLoop('myGame2', function () {
 game.newLoop('myGame3', function () {
 
   if(ss.isFullScreen()==true){
-
+    
   if (field.alpha >= 1) {
 
-    if (logo[0].alpha >= 1) {
-      card[0].moveTo(p(295, 92), x2, y2);
-      logo[0].moveTo(p(295, 92), x2, y2);
-    }
+    the_first_2();
 
-    if (logo[0].isStaticIntersect(fon3[0].getStaticBox()) == true) {
-      card[0].setPosition(p(295, 92));
-      logo[0].setPosition(p(295, 92));
-      card[1].moveTo(p(295 + 180, 92), x2, y2);
-      logo[1].moveTo(p(295 + 180, 92), x2, y2);
-    }
-
-    if (logo[1].isStaticIntersect(fon3[5].getStaticBox()) == true) {
-      card[1].setPosition(p(295 + 180, 92));
-      logo[1].setPosition(p(295 + 180, 92));
-      card[2].moveTo(p(295 + 180 * 2, 92), x2, y2);
-      logo[2].moveTo(p(295 + 180 * 2, 92), x2, y2);
-    }
-
-    if (logo[2].isStaticIntersect(fon3[10].getStaticBox()) == true) {
-      card[2].setPosition(p(295 + 180 * 2, 92), x2, y2);
-      logo[2].setPosition(p(295 + 180 * 2, 92), x2, y2);
-      card[3].moveTo(p(295 + 180 * 3, 92), x2, y2);
-      logo[3].moveTo(p(295 + 180 * 3, 92), x2, y2);
-    }
-
-    if (logo[3].isStaticIntersect(fon3[15].getStaticBox()) == true) {
-      card[3].setPosition(p(295 + 180 * 3, 92), x2, y2);
-      logo[3].setPosition(p(295 + 180 * 3, 92), x2, y2);
-      card[4].moveTo(p(295 + 180 * 4, 92), x2, y2);
-      logo[4].moveTo(p(295 + 180 * 4, 92), x2, y2);
-    }
-
-    if (logo[4].isStaticIntersect(fon3[20].getStaticBox()) == true) {
-      card[4].setPosition(p(295 + 180 * 4, 92), x2, y2);
-      logo[4].setPosition(p(295 + 180 * 4, 92), x2, y2);
-      card[5].moveTo(p(295 + 180 * 5, 92), x2, y2);
-      logo[5].moveTo(p(295 + 180 * 5, 92), x2, y2);
-    }
-
-    if (logo[5].isStaticIntersect(fon3[25].getStaticBox()) == true) {
-      card[5].setPosition(p(295 + 180 * 5, 92), x2, y2);
-      logo[5].setPosition(p(295 + 180 * 5, 92), x2, y2);
-      card[6].moveTo(p(295 + 180 * 6, 92), x2, y2);
-      logo[6].moveTo(p(295 + 180 * 6, 92), x2, y2);
-    }
-
-    if (logo[6].isStaticIntersect(fon3[30].getStaticBox()) == true) {
-      card[6].setPosition(p(295 + 180 * 6, 92), x2, y2);
-      logo[6].setPosition(p(295 + 180 * 6, 92), x2, y2);
-      card[7].moveTo(p(295, 92+180), x2, y2);
-      logo[7].moveTo(p(295, 92+180), x2, y2);
-    }
-
-    if (logo[7].isStaticIntersect(fon3[1].getStaticBox()) == true) {
-      card[7].setPosition(p(295, 92+180), x2, y2);
-      logo[7].setPosition(p(295, 92+180), x2, y2);
-      card[8].moveTo(p(295 + 180, 92+180), x2, y2);
-      logo[8].moveTo(p(295 + 180, 92+180), x2, y2);
-    }
-
-    if (logo[8].isStaticIntersect(fon3[6].getStaticBox()) == true) {
-      card[8].setPosition(p(295 + 180, 92+180), x2, y2);
-      logo[8].setPosition(p(295 + 180, 92+180), x2, y2);
-      card[9].moveTo(p(295 + 180 * 2, 92+180), x2, y2);
-      logo[9].moveTo(p(295 + 180 * 2, 92+180), x2, y2);
-    }
-
-    if (logo[9].isStaticIntersect(fon3[11].getStaticBox()) == true) {
-      card[9].setPosition(p(295 + 180 * 2, 92+180), x2, y2);
-      logo[9].setPosition(p(295 + 180 * 2, 92+180), x2, y2);
-      card[10].moveTo(p(295 + 180 * 3, 92+180), x2, y2);
-      logo[10].moveTo(p(295 + 180 * 3, 92+180), x2, y2);
-    }
-
-    if (logo[10].isStaticIntersect(fon3[16].getStaticBox()) == true) {
-      card[10].setPosition(p(295 + 180 * 3, 92+180), x2, y2);
-      logo[10].setPosition(p(295 + 180 * 3, 92+180), x2, y2);
-      card[11].moveTo(p(295 + 180 * 4, 92+180), x2, y2);
-      logo[11].moveTo(p(295 + 180 * 4, 92+180), x2, y2);
-   }
-
-    if (logo[11].isStaticIntersect(fon3[21].getStaticBox()) == true) {
-      card[11].setPosition(p(295 + 180 * 4, 92+180), x2, y2);
-      logo[11].setPosition(p(295 + 180 * 4, 92+180), x2, y2);
-      card[12].moveTo(p(295 + 180 * 5, 92+180), x2, y2);
-      logo[12].moveTo(p(295 + 180 * 5, 92+180), x2, y2);
-    }
-
-    if (logo[12].isStaticIntersect(fon3[26].getStaticBox()) == true) {
-      card[12].setPosition(p(295 + 180 * 5, 92+180), x2, y2);
-      logo[12].setPosition(p(295 + 180 * 5, 92+180), x2, y2);
-      card[13].moveTo(p(295 + 180 * 6, 92+180), x2, y2);
-      logo[13].moveTo(p(295 + 180 * 6, 92+180), x2, y2);
-    }
-
-    if (logo[13].isStaticIntersect(fon3[31].getStaticBox()) == true) {
-      card[13].setPosition(p(295 + 180 * 6, 92+180), x2, y2);
-      logo[13].setPosition(p(295 + 180 * 6, 92+180), x2, y2);
-      card[14].moveTo(p(295, 92+180 + 180), x2, y2);
-      logo[14].moveTo(p(295, 92+180 + 180), x2, y2);
-    }
-
-    if (logo[14].isStaticIntersect(fon3[2].getStaticBox()) == true) {
-      card[14].setPosition(p(295, 92+180 + 180), x2, y2);
-      logo[14].setPosition(p(295, 92+180 + 180), x2, y2);
-      card[15].moveTo(p(295 + 180, 92+180 + 180), x2, y2);
-      logo[15].moveTo(p(295 + 180, 92+180 + 180), x2, y2);
-    }
-
-    if (logo[15].isStaticIntersect(fon3[7].getStaticBox()) == true) {
-      card[15].setPosition(p(295 + 180, 92+180 + 180), x2, y2);
-      logo[15].setPosition(p(295 + 180, 92+180 + 180), x2, y2);
-      card[16].moveTo(p(295 + 180 * 2, 92+180 + 180), x2, y2);
-      logo[16].moveTo(p(295 + 180 * 2, 92+180 + 180), x2, y2);
-    }
-
-    if (logo[16].isStaticIntersect(fon3[12].getStaticBox()) == true) {
-      card[16].setPosition(p(295 + 180 * 2, 92+180 + 180), x2, y2);
-      logo[16].setPosition(p(295 + 180 * 2, 92+180 + 180), x2, y2);
-      card[17].moveTo(p(295 + 180 * 3, 92+180 + 180), x2, y2);
-      logo[17].moveTo(p(295 + 180 * 3, 92+180 + 180), x2, y2);
-    }
-
-    if (logo[17].isStaticIntersect(fon3[17].getStaticBox()) == true) {
-      card[17].setPosition(p(295 + 180 * 3, 92+180 + 180), x2, y2);
-      logo[17].setPosition(p(295 + 180 * 3, 92+180 + 180), x2, y2);
-      card[18].moveTo(p(295 + 180 * 4, 92+180 + 180), x2, y2);
-      logo[18].moveTo(p(295 + 180 * 4, 92+180 + 180), x2, y2);
-    }
-
-    if (logo[18].isStaticIntersect(fon3[22].getStaticBox()) == true) {
-      card[18].setPosition(p(295 + 180 * 4, 92+180 + 180), x2, y2);
-      logo[18].setPosition(p(295 + 180 * 4, 92+180 + 180), x2, y2);
-      card[19].moveTo(p(295 + 180 * 5, 92+180 + 180), x2, y2);
-      logo[19].moveTo(p(295 + 180 * 5, 92+180 + 180), x2, y2);
-    }
-
-    if (logo[19].isStaticIntersect(fon3[27].getStaticBox()) == true) {
-      card[19].setPosition(p(295 + 180 * 5, 92+180 + 180), x2, y2);
-      logo[19].setPosition(p(295 + 180 * 5, 92+180 + 180), x2, y2);
-      card[20].moveTo(p(295 + 180 * 6, 92+180 + 180), x2, y2);
-      logo[20].moveTo(p(295 + 180 * 6, 92+180 + 180), x2, y2);
-    }
-
-    if (logo[20].isStaticIntersect(fon3[32].getStaticBox()) == true) {
-      card[20].setPosition(p(295 + 180 * 6, 92+180 + 180), x2, y2);
-      logo[20].setPosition(p(295 + 180 * 6, 92+180 + 180), x2, y2);
-      card[21].moveTo(p(295, 92+180 + 180 * 2), x2, y2);
-      logo[21].moveTo(p(295, 92+180 + 180 * 2), x2, y2);
-    }
-
-    if (logo[21].isStaticIntersect(fon3[3].getStaticBox()) == true) {
-      card[21].setPosition(p(295, 92+180 + 180 * 2), x2, y2);
-      logo[21].setPosition(p(295, 92+180 + 180 * 2), x2, y2);
-      card[22].moveTo(p(295 + 180, 92+180 + 180 * 2), x2, y2);
-      logo[22].moveTo(p(295 + 180, 92+180 + 180 * 2), x2, y2);
-    }
-
-    if (logo[22].isStaticIntersect(fon3[8].getStaticBox()) == true) {
-      card[22].setPosition(p(295 + 180, 92+180 + 180 * 2), x2, y2);
-      logo[22].setPosition(p(295 + 180, 92+180 + 180 * 2), x2, y2);
-      card[23].moveTo(p(295 + 180 * 2, 92+180 + 180 * 2), x2, y2);
-      logo[23].moveTo(p(295 + 180 * 2, 92+180 + 180 * 2), x2, y2);
-    }
-
-    if (logo[23].isStaticIntersect(fon3[13].getStaticBox()) == true) {
-      card[23].setPosition(p(295 + 180 * 2, 92+180 + 180 * 2), x2, y2);
-      logo[23].setPosition(p(295 + 180 * 2, 92+180 + 180 * 2), x2, y2);
-      card[24].moveTo(p(295 + 180 * 3, 92+180 + 180 * 2), x2, y2);
-      logo[24].moveTo(p(295 + 180 * 3, 92+180 + 180 * 2), x2, y2);
-    }
-
-    if (logo[24].isStaticIntersect(fon3[18].getStaticBox()) == true) {
-      card[24].setPosition(p(295 + 180 * 3, 92+180 + 180 * 2), x2, y2);
-      logo[24].setPosition(p(295 + 180 * 3, 92+180 + 180 * 2), x2, y2);
-      card[25].moveTo(p(295 + 180 * 4, 92+180 + 180 * 2), x2, y2);
-      logo[25].moveTo(p(295 + 180 * 4, 92+180 + 180 * 2), x2, y2);
-    }
-
-    if (logo[25].isStaticIntersect(fon3[23].getStaticBox()) == true) {
-      card[25].setPosition(p(295 + 180 * 4, 92+180 + 180 * 2), x2, y2);
-      logo[25].setPosition(p(295 + 180 * 4, 92+180 + 180 * 2), x2, y2);
-      card[26].moveTo(p(295 + 180 * 5, 92+180 + 180 * 2), x2, y2);
-      logo[26].moveTo(p(295 + 180 * 5, 92+180 + 180 * 2), x2, y2);
-    }
-
-    if (logo[26].isStaticIntersect(fon3[28].getStaticBox()) == true) {
-      card[26].setPosition(p(295 + 180 * 5, 92+180 + 180 * 2), x2, y2);
-      logo[26].setPosition(p(295 + 180 * 5, 92+180 + 180 * 2), x2, y2);
-      card[27].moveTo(p(295 + 180 * 6, 92+180 + 180 * 2), x2, y2);
-      logo[27].moveTo(p(295 + 180 * 6, 92+180 + 180 * 2), x2, y2);
-    }
-
-    if (logo[27].isStaticIntersect(fon3[33].getStaticBox()) == true) {
-      card[27].setPosition(p(295 + 180 * 6, 92+180 + 180 * 2), x2, y2);
-      logo[27].setPosition(p(295 + 180 * 6, 92+180 + 180 * 2), x2, y2);
-      card[28].moveTo(p(295, 92+180 + 180 * 3), x2, y2);
-      logo[28].moveTo(p(295, 92+180 + 180 * 3), x2, y2);
-    }
-
-    if (logo[28].isStaticIntersect(fon3[4].getStaticBox()) == true) {
-      card[28].setPosition(p(295, 92+180 + 180 * 3), x2, y2);
-      logo[28].setPosition(p(295, 92+180 + 180 * 3), x2, y2);
-      card[29].moveTo(p(295 + 180, 92+180 + 180 * 3), x2, y2);
-      logo[29].moveTo(p(295 + 180, 92+180 + 180 * 3), x2, y2);
-    }
-
-    if (logo[29].isStaticIntersect(fon3[9].getStaticBox()) == true) {
-      card[29].setPosition(p(295 + 180, 92+180 + 180 * 3), x2, y2);
-      logo[29].setPosition(p(295 + 180, 92+180 + 180 * 3), x2, y2);
-      card[30].moveTo(p(295 + 180*2, 92+180 + 180 * 3), x2, y2);
-      logo[30].moveTo(p(295 + 180*2, 92+180 + 180 * 3), x2, y2);
-    }
-
-    if (logo[30].isStaticIntersect(fon3[14].getStaticBox()) == true) {
-      card[30].setPosition(p(295 + 180*2, 92+180 + 180 * 3), x2, y2);
-      logo[30].setPosition(p(295 + 180*2, 92+180 + 180 * 3), x2, y2);
-      card[31].moveTo(p(295 + 180*3, 92+180 + 180 * 3), x2, y2);
-      logo[31].moveTo(p(295 + 180*3, 92+180 + 180 * 3), x2, y2);
-    }
-
-    if (logo[31].isStaticIntersect(fon3[19].getStaticBox()) == true) {
-      card[31].setPosition(p(295 + 180*3, 92+180 + 180 * 3), x2, y2);
-      logo[31].setPosition(p(295 + 180*3, 92+180 + 180 * 3), x2, y2);
-      card[32].moveTo(p(295 + 180*4, 92+180 + 180 * 3), x2, y2);
-      logo[32].moveTo(p(295 + 180*4, 92+180 + 180 * 3), x2, y2);
-    }
-
-    if (logo[32].isStaticIntersect(fon3[24].getStaticBox()) == true) {
-      card[32].setPosition(p(295 + 180*4, 92+180 + 180 * 3), x2, y2);
-      logo[32].setPosition(p(295 + 180*4, 92+180 + 180 * 3), x2, y2)
-    }
-
-    if (field.alpha > 1 && card[32].x == 655)   {
+    if (field.alpha > 1 && card[0].isIntersect(fon3[0].getStaticBox()) == true)   {
     for (var i in numb) {
       numb[i].draw();
     }};
 
-      if (logo[32].isStaticIntersect(fon3[24].getStaticBox()) == true) {
+      if (logo[0].isStaticIntersect(fon3[0].getStaticBox()) == true) {
         the_second();
         game.setLoop('myGame4');
       }
@@ -876,6 +643,16 @@ game.newLoop('myGame4', function () {
     game.setLoop('doska');
 
   }
+  if (mouse.isPeekObject("LEFT", logo[33])) {
+    nn=33; 
+    game.setLoop('doska');
+
+  }
+  if (mouse.isPeekObject("LEFT", logo[34])) {
+    nn=34; 
+    game.setLoop('doska');
+
+  }
 
 
   if (mouse.isPress('RIGHT') && ss.isFullScreen()==true) ss.exitFullScreen();
@@ -902,18 +679,20 @@ game.newLoop('myGame4', function () {
   for (var i in numb) {
     numb[i].draw();
   };
-
+ 
 });
 
 game.newLoop("doska", function(){
   if(ss.isFullScreen()==true){
   koloda.x=850; 
   koloda.y=480;
-  numb[nn].alpha=0;
+  numb[nn].alpha=0;  
 
 if(logo[nn].isIntersect(koloda)==false && card[nn].w <256 && card[nn].x<1600){
+
   logo[nn].moveTo(p2, x1, y1); 
-  card[nn].moveTo(p2, x1, y1)
+  card[nn].moveTo(p2, x1, y1); 
+ // Cam.scale(+alp1,+alp1)
 }
 if(logo[nn].isIntersect(koloda)==true){
   logo[nn].setPosition(p2);
@@ -922,49 +701,17 @@ if(logo[nn].isIntersect(koloda)==true){
   card[nn].h = 256;
   logo[nn].w = 256;
   logo[nn].h = 256; 
+ // Cam.scale(2,2)
 
 }
 
 if (mouse.isPeekStatic("LEFT", card[nn].getStaticBox()) && card[nn].alpha == 1 ) {
  // card[nn].setPosition(p(1700, 14+nn));
  // card[nn].w = 100;
- // card[nn].h = 100;
+ // card[nn].h = 100; 
  card[nn].w=165; card[nn].h=165;
- if (nn==0) {card[nn].setPosition(p(295, 92))}
- if (nn==1) {card[nn].setPosition(p(295 + 180, 92))}
- if (nn==2) {card[nn].setPosition(p(295 + 180 * 2, 92))}
- if (nn==3) {card[nn].setPosition(p(295 + 180 * 3, 92))}
- if (nn==4) {card[nn].setPosition(p(295 + 180 * 4, 92))}
- if (nn==5) {card[nn].setPosition(p(295 + 180 * 5, 92))}
- if (nn==6) {card[nn].setPosition(p(295 + 180 * 6, 92))}
- if (nn==7) {card[nn].setPosition(p(295, 92 + 180))}
- if (nn==8) {card[nn].setPosition(p(295 + 180, 92 + 180))}
- if (nn==9) {card[nn].setPosition(p(295 + 180 * 2, 92 + 180))}
- if (nn==10) {card[nn].setPosition(p(295 + 180 * 3, 92 + 180))}
- if (nn==11) {card[nn].setPosition(p(295 + 180 * 4, 92 + 180))}
- if (nn==12) {card[nn].setPosition(p(295 + 180 * 5, 92 + 180))}
- if (nn==13) {card[nn].setPosition(p(295 + 180 * 6, 92 + 180))}
- if (nn==14) {card[nn].setPosition(p(295, 92 + 180 * 2))}
- if (nn==15) {card[nn].setPosition(p(295 + 180, 92 + 180 * 2))}
- if (nn==16) {card[nn].setPosition(p(295 + 180 * 2, 92 + 180 * 2))}
- if (nn==17) {card[nn].setPosition(p(295 + 180 * 3, 92 + 180 * 2))}
- if (nn==18) {card[nn].setPosition(p(295 + 180 * 4, 92 + 180 * 2))}
- if (nn==19) {card[nn].setPosition(p(295 + 180 * 5, 92 + 180 * 2))}
- if (nn==20) {card[nn].setPosition(p(295 + 180 * 6, 92 + 180 * 2))}
- if (nn==21) {card[nn].setPosition(p(295, 92 + 180 * 3))}
- if (nn==22) {card[nn].setPosition(p(295 + 180, 92 + 180 * 3))}
- if (nn==23) {card[nn].setPosition(p(295 + 180 * 2, 92 + 180 * 3))}
- if (nn==24) {card[nn].setPosition(p(295 + 180 * 3, 92 + 180 * 3))}
- if (nn==25) {card[nn].setPosition(p(295 + 180 * 4, 92 + 180 * 3))}
- if (nn==26) {card[nn].setPosition(p(295 + 180 * 5, 92 + 180 * 3))}
- if (nn==27) {card[nn].setPosition(p(295 + 180 * 6, 92 + 180 * 3))}
- if (nn==28) {card[nn].setPosition(p(295, 92 + 180 * 4))}
- if (nn==29) {card[nn].setPosition(p(295 + 180, 92 + 180 * 4))}
- if (nn==30) {card[nn].setPosition(p(295 + 180 * 2, 92 + 180 * 4))}
- if (nn==31) {card[nn].setPosition(p(295 + 180 * 3, 92 + 180 * 4))}
- if (nn==32) {card[nn].setPosition(p(295 + 180 * 4, 92 + 180 * 4))}
- if (nn==33) {card[nn].setPosition(p(295 + 180 * 5, 92 + 180 * 4))}
- if (nn==34) {card[nn].setPosition(p(295 + 180 * 6, 92 + 180 * 4))}
+ card[nn].setPosition(fon3[nn].getPosition());
+
   game.setLoop('myGame4');
 }
 
